@@ -1,0 +1,6 @@
+1. Sửa lỗi insert 2 lần trong database -> 2. Thiếu display giỏ hàng
+3. Tự động hóa trag chính (lấy thông tin sản phẩm từ database và display)
+4. Thêm trang chi tiết sản phẩm -> 5. Thêm trang thanh toán
+
+----Add to cart button------
+echo '<div class="cart_bt_1"><a href="javascript:void(0);" onclick="addToCart(\''.$row['prd_name'].'\',\''.$row['prd_id'].'\',\''.$row['prd_price'].'\')">Add To Cart</a></div>';

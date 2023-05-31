@@ -1,0 +1,156 @@
+@media (min-width: 576px) and (max-width: 767px) {
+    #my_slider a.carousel-control-prev {
+        position: absolute;
+        left: 175px;
+        top: 90%;
+        display: none;
+    }
+    #my_slider a.carousel-control-next {
+        position: absolute;
+        left: 236px;
+        top: 90%;
+        display: none;
+    }
+.navbar-light .navbar-brand {
+    
+}
+.navbar-light .navbar-brand {
+    width: 92%;
+    text-align: right;
+    margin: 0px;
+    float: right;
+}
+.navbar{
+    padding: 10px 0px;
+}
+.login_text{
+    display: none;
+}
+.border_1 {
+    height: auto;
+    padding: 10px 0px;
+    margin: 0px;
+}
+.image_1{
+    text-align: center;
+}
+.banner_section{
+    padding-bottom: 0px;
+}
+.banner_taital{
+    padding-top: 40px;
+    font-size: 70px;
+    width: 90%;
+}
+.image_1 {
+    width: 100%;
+    position: initial;
+    top: 0px;
+}
+
+.buynow_bt {
+    width: 170px;
+}
+.contact_bt {
+    width: 170px;
+}
+.image_2 {
+    width: 100%;
+    padding-top: 30px;
+}
+.catagary_left {
+    width: 100%;
+}
+.catagary_right {
+    width: 100%;
+}
+.catagary_menu li {
+    float: initial;
+    padding: 5px 0px;
+}
+
+.catagary_menu{
+    text-align: center;
+}
+.box_man {
+    padding: 25px 5px;
+    margin-top: 20px;
+}
+.cart_main {
+    width: 60%;
+}
+.cart_bt a {
+    padding: 8px 14px;
+}
+.samsung_text {
+    font-size: 16px;
+}
+.computers_taital {
+    font-size: 36px;
+}
+.computer_main{
+    margin-top: 40px;
+    padding: 20px;
+}
+
+.computer_text_main {
+    width: 80%;
+}
+.computer_img {
+    padding-top: 40px;
+    min-height: 0px;
+}
+.computer_text{
+    padding-top: 30px;
+}
+.mans_main {
+    margin-top: 40px;
+    padding: 20px 0px 0px 30px;
+}
+.offer_text {
+    width: 100%;
+    font-size: 50px;
+}
+.lorem_text {
+    width: 90%;
+}
+
+.womans_taital{
+    font-size: 36px;
+}
+
+.Get_offer_text {
+    width: 70%;
+    font-size: 40px;
+    padding-top: 0px;
+}
+.image_4{
+    padding-top: 30px;
+}
+.footer_logo_main {
+    width: 100%;
+    display: block;
+}
+.social_icon {
+    text-align: left;
+}
+.social_icon li {
+    float: left;
+    padding: 30px 20px 0px 0px;
+}
+.footer_section_2{
+    padding-top: 20px;
+}
+.adderss_text{
+    padding-top: 30px;
+}
+
+.footer_logo {
+    width: 20%;
+    float: left;
+}
+.mail_section_1 {
+    width: 100%;
+}
+
+}
