@@ -1,6 +1,19 @@
 <?php include_once ('master/header.php');
 include_once ('master/database.php');
+?>
 
+<?php
+if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+    $sql = "SELECT *FROM (
+  SELECT p.prd_id, p.prd_name, c.cate_id, c.cate_name, p.prd_price,p.prd_image
+  FROM tbl_product p 
+  LEFT JOIN tbl_category c ON p.cate_id = c.cate_id
+) AS npt
+WHERE npt.cate_name = '$category';";
+    $result = mysqli_query($conn, $sql);
+    $conn->close();
+}
 ?>
 <div class="category_section layout_padding">
     <div class="container">
@@ -21,70 +34,36 @@ include_once ('master/database.php');
                     window.location.href = 'sort_by_cate.php?category=' + encodeURIComponent($category);
                 }</script>
             <script>
-                function productDetails($prd_name,$prd_id,$prd_price,$prd_quantity = 1) {
-                    window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id)+"&prd_price="+encodeURIComponent($prd_price)+"&quantity="+encodeURIComponent($prd_quantity);
+                function productDetails($prd_name,$prd_id) {
+                    window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id);
                 }
             </script>
         </div>
     </div>
 </div>
 
-</body>
-<?php
-// Retrieve the selected category from the URL parameter
-if (isset($_GET['category'])) {
-    $category = $_GET['category'];
-    $sql = "SELECT *
-FROM (
-  SELECT p.prd_id, p.prd_name, c.cate_id, c.cate_name, p.prd_price 
-  FROM tbl_product p 
-  LEFT JOIN tbl_category c ON p.cate_id = c.cate_id
-) AS npt
-WHERE npt.cate_name = '$category';";
-    $result = mysqli_query($conn,$sql);
-    if ($result === false) {
-        echo "Query failed: " . $conn->error;
-    } else {
-        echo '<div class="computers_section_2">';
-        echo '<div class="container-fluid">';
-        echo '<div class="computer_main">';
-        echo '<div class="row">';
-        while ($row = $result->fetch_assoc()) {
+<div class="computers_section_2">
+    <div class="container-fluid">
+        <div class="computer_main">
+            <div class="row">'
+                <?php while ($row = $result->fetch_assoc()) { ?>
+                <div class="col-md-4">
+                    <div class="computer_img"><img src="./assets/images/<?php echo $row['prd_image']?>"></div>
+                        <h4 class="computer_text"><?php echo $row['prd_name']?></h4>
+                        <div class="computer_text_main">
+                            <h4 class="dell_text"><?php echo $row["cate_name"]?></h4>
+                            <h6 class="price_text">$<?php echo $row["prd_price"]?></h6>
+                            </div>
+                        <div class="cart_bt_1"><a href="javascript:void(0);" onclick="productDetails('<?php echo $row['prd_name']; ?>','<?php echo $row['prd_id']; ?>','<?php echo $row['prd_price']; ?>')">View details</a></div>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
 
-            switch ($row["cate_name"]) {
-                case "ASUS":
-                    echo '<div class="col-md-12">';
-                    echo '<div class="computer_img"><img src="./assets/images/img1.jpg"></div>';
-                    break;
-                case "Macbook":
-                    echo '<div class="col-md-6">';
-                    echo '<div class="computer_img"><img src="./assets/images/img2.jpg"></div>';
-                    break;
-                case "Dell":
-                    echo '<div class="col-md-6">';
-                    echo '<div class="computer_img"><img src="./assets/images/laptop-dell.jpg"></div>';
-                    break;
-                case "HP":
-                    echo '<div class="col-md-12">';
-                    echo '<div class="computer_img"><img src="./assets/images/laptop-hp.jpg"></div>';
-                    break;
-            }
-            echo '<h4 class="computer_text">' . $row["prd_name"] . '</h4>';
-            echo '<div class="computer_text_main">';
-            echo '<h4 class="dell_text">' . $row["cate_name"] . '</h4>';
-            echo '<h6 class="price_text">'."$". $row["prd_price"] . '</h6>';
-            echo '</div>';
-            echo '<div class="cart_bt_1"><a href="javascript:void(0);" onclick="productDetails(\''.$row['prd_name'].'\',\''.$row['prd_id'].'\',\''.$row['prd_price'].'\')">View details</a></div>';
-            echo '</div>';
-        }
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-        echo '</div>';
-    }
-}
-$conn->close();
-?>
+</body>
+
 
 
 

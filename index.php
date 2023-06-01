@@ -1,5 +1,8 @@
 <?php include_once('master/header.php') ;
 include_once ('master/database.php');
+?>
+
+<?php
 
 
 ?>
@@ -23,8 +26,8 @@ include_once ('master/database.php');
                     window.location.href = 'sort_by_cate.php?category=' + encodeURIComponent(category);
                 }</script>
             <script>
-                function productDetails($prd_name,$prd_id,$prd_price,$prd_quantity = 1) {
-                    window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id)+"&prd_price="+encodeURIComponent($prd_price)+"&quantity="+encodeURIComponent($prd_quantity);
+                function productDetails($prd_name,$prd_id) {
+                    window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id);
                 }
             </script>
 
