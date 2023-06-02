@@ -10,9 +10,6 @@ $sql = "SELECT *FROM (
 ) AS npt";
 $result = mysqli_query($conn, $sql);
 $so_san_pham = mysqli_num_rows($result);
-
-
-
 $conn->close();
 ?>
 

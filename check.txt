@@ -1,5 +1,4 @@
 1. Sửa lỗi insert 2 lần trong database -> 2. Thiếu display giỏ hàng
-3. Tự động hóa trag chính (lấy thông tin sản phẩm từ database và display)
 5. Thêm trang thanh toán
 
 
