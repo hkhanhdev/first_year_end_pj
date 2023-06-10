@@ -30,12 +30,12 @@ $result = mysqli_query($conn,$sql);
 <?php }
 if (isset($_POST['user_id'])) {
     $user_id = $_POST['user_id'];
-    $delete_clause = "DELETE FROM tbl_user WHERE user_id = ".$user_id;
-    $is_deleted = mysqli_query($conn, $delete_clause);
-    if ($is_deleted) {
-        $update_clause = "UPDATE tbl_user SET user_id = user_id - 1 where user_id > ".$user_id;
-        $resort_order = mysqli_multi_query($conn, $update_clause);
-        if ($resort_order) {
+    $delete_user = "DELETE FROM tbl_user WHERE user_id = ".$user_id;
+    $deleted_user = mysqli_query($conn, $delete_user);
+    if ($deleted_user) {
+        $update_user = "UPDATE tbl_user SET user_id = user_id - 1 where user_id > ".$user_id;
+        $reorder_user = mysqli_multi_query($conn, $update_user);
+        if ($reorder_user) {
             echo 'Order of user_id updated successfully.';
         } else {
             echo 'Error updating order of user_id: ' . mysqli_error($conn);

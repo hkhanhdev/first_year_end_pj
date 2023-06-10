@@ -41,12 +41,12 @@ $result = mysqli_query($conn,$sql);
     }
     if (isset($_POST['ord_id'])) {
         $ord_id = $_POST['ord_id'];
-        $delete_clause = "DELETE FROM tbl_order WHERE ord_id = $ord_id";
-        $is_deleted = mysqli_query($conn, $delete_clause);
-        if ($is_deleted) {
-            $update_clause = "UPDATE tbl_order SET ord_id = ord_id - 1 where ord_id > ".$ord_id;
-            $resort_order = mysqli_multi_query($conn, $update_clause);
-            if ($resort_order) {
+        $delete_ord = "DELETE FROM tbl_order WHERE ord_id = $ord_id";
+        $deleted_ord = mysqli_query($conn, $delete_ord);
+        if ($deleted_ord) {
+            $update_ord = "UPDATE tbl_order SET ord_id = ord_id - 1 where ord_id > ".$ord_id;
+            $reorder_ord = mysqli_multi_query($conn, $update_ord);
+            if ($reorder_ord) {
             echo 'Order of prd_id updated successfully.';
             } else {
             echo 'Error updating order of prd_id: ' . mysqli_error($conn);

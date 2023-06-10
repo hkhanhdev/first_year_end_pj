@@ -78,26 +78,24 @@ if ($result->num_rows > 0) {
     }
     if (isset($_POST['prd_id'])) {
         $prd_id = $_POST['prd_id'];
-        $delete_clause = "DELETE FROM tbl_product WHERE prd_id = $prd_id";
-        $is_deleted = mysqli_query($conn, $delete_clause);
-        if ($is_deleted) {
-            $update_clause = "UPDATE tbl_product SET prd_id = prd_id - 1 where prd_id > ".$prd_id;
-            $resort_order = mysqli_multi_query($conn, $update_clause);
-            if ($resort_order) {
-            echo 'Order of prd_id updated successfully.';
+        $delete_prd = "DELETE FROM tbl_product WHERE prd_id = $prd_id";
+        $deleted_prd = mysqli_query($conn, $delete_prd);
+        if ($deleted_prd) {
+            $update_prd = "UPDATE tbl_product SET prd_id = prd_id - 1 where prd_id > ".$prd_id;
+            $reorder_prd = mysqli_multi_query($conn, $update_prd);
+            if ($reorder_prd) {
+                echo 'Order of prd_id updated successfully.';
             } else {
-            echo 'Error updating order of prd_id: ' . mysqli_error($conn);
+                echo 'Error updating order of prd_id: ' . mysqli_error($conn);
             }
         }
         else {
-        echo 'Error executing SQL script: ' . mysqli_error($conn);
+            echo 'Error executing SQL script: ' . mysqli_error($conn);
         }
     }
 } else {
     // Handle case when no rows are retrieved
     echo "<tr><td colspan='6'>No products found.</td></tr>";
-
-
 }
 ?>
 
