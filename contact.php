@@ -30,15 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 echo "Your email you typed in is not registered";
             }
         }
-
     }
     $conn ->close();
 }
-
-
 ?>
 <body>
-
 <div id="signup_login_contact_form">
     <h1>Contact</h1>
     <div class="signup_login_contact_form_box">
@@ -50,14 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <input type="submit" value="Send" name="submit">
         </form>
     </div>
-
 </div>
-
 </body>
-
-
-
-
-
-
 <?php include_once('master/footer.php') ;?>

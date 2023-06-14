@@ -1,6 +1,9 @@
-1. Sửa lỗi insert 2 lần trong database -> 2. Thiếu display giỏ hàng
+
 5. Thêm trang thanh toán
 
 
-----Add to cart button------
-<div class="cart_bt_1"><a href="javascript:void(0);" onclick="addToCart('<?php echo $row['prd_name']; ?>','<?php echo $row['prd_id']; ?>','<?php echo $row['prd_price']; ?>')">Add To Cart</a></div>
+
+
+
+
+$sql = "select ord_id,customer_id,count(ord_amount) as so_luong_san_pham from tbl_order group by customer_id;"

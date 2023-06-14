@@ -8,16 +8,16 @@ $sql = "select p.prd_id,p.prd_name,p.prd_price,p.prd_image,c.cate_id,c.cate_name
 $result = mysqli_query($conn,$sql);
 $row = $result->fetch_assoc();
 
-$conn->close();
+
 ?>
 
 <div class="computers_section_2">
     <div class="container-fluid">
         <div class="computer_main">
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="computer_img"><img src="./assets/images/<?php echo $row['prd_image']?>"></div>
-                    <h4 class="computer_text"><?php echo $row['prd_name']?></h4>
+                    <h4 class="computer_text" id="prd_name"><?php echo $row['prd_name']?></h4>
                     <div class="computer_text_main">
                         <h4 class="dell_text"><?php echo $row['cate_name'] ?></h4>
                         <div class="quantity-section">
@@ -31,7 +31,11 @@ $conn->close();
 
                     </div>
 
-                    <div class="cart_bt_1"><a href="javascript:void(0);" onclick="addToCart('<?php echo $row['prd_name']; ?>','<?php echo $row['prd_id']; ?>','<?php echo $row['prd_price']; ?>')">Add To Cart</a></div>
+                    <div class="cart_bt_1"><button type="submit" onclick="addToCart('<?php echo $row['prd_name']; ?>','<?php echo $prd_id; ?>')">Add To Cart</button></div>
+                </div>
+
+                <div class="col-md-6">
+                    <h1>Chi tiet san pham</h1>
                 </div>
 
             </div>
@@ -62,13 +66,48 @@ $conn->close();
         const updatedPrice = price*quantity;
         priceElement.textContent = "$" + updatedPrice;
     }
+    function addToCart(productName, productId) {
+        var total_price = document.getElementById('price').textContent.replace('$', '');
+        var quantity = document.getElementById('quantity').value;
+
+        // Create a form object
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'cart.php';
+
+        // Create hidden input fields for each data parameter
+        var prdNameInput = document.createElement('input');
+        prdNameInput.type = 'hidden';
+        prdNameInput.name = 'prd_name';
+        prdNameInput.value = productName;
+        form.appendChild(prdNameInput);
+
+        var prdIdInput = document.createElement('input');
+        prdIdInput.type = 'hidden';
+        prdIdInput.name = 'prd_id';
+        prdIdInput.value = productId;
+        form.appendChild(prdIdInput);
+
+        var totalPriceInput = document.createElement('input');
+        totalPriceInput.type = 'hidden';
+        totalPriceInput.name = 'total_price';
+        totalPriceInput.value = total_price;
+        form.appendChild(totalPriceInput);
+
+        var quantityInput = document.createElement('input');
+        quantityInput.type = 'hidden';
+        quantityInput.name = 'quantity';
+        quantityInput.value = quantity;
+        form.appendChild(quantityInput);
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
+    }
 
 </script>
 
 
-
-
-
-
-
-<?php include_once ('master/footer.php')?>
+<?php
+$conn->close();
+include_once ('master/footer.php')?>

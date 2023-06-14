@@ -2,7 +2,17 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+include_once ('master/database.php');
+if (isset($_SESSION['username'])) {
+    $get_cart_items_query = "select count(ord_id) as so_san_pham from tbl_order o left join tbl_user u on o.customer_id = u.user_id where username = '".$_SESSION['username']."' and ord_status = 'in cart' ;";
+    $get_cart_items_result = mysqli_query($conn,$get_cart_items_query);
+    $hang = $get_cart_items_result->fetch_assoc();
+    $_SESSION['so_san_pham'] = $hang['so_san_pham'];
+}else {
+    $_SESSION['so_san_pham'] = 0;
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,12 +37,14 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="./signup.php">Sign up</a>
                 <a href="./contact.php">Contact</a>
                 <div class="header_icon">
-                    <a href="cart.php"><i class="uil uil-shopping-cart"></i><span class="badge badge-warning navbar-badge">0</span></a>
+                    <a href="cart.php"><i class="uil uil-shopping-cart"></i><span class="badge badge-warning navbar-badge"><?php echo $_SESSION['so_san_pham']?></span></a>
                     <a href="user.php">Account</a>
-                    </div>
+                </div>
             </div>
             <span style="font-size:30px;cursor:pointer; color: #fff;" onclick="openNav()"><img src="./assets/images/toggle-icon.png"></span>
 
         </nav>
     </div>
 </div>
+
+

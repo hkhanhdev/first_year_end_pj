@@ -10,9 +10,7 @@ $sql = "SELECT *FROM (
 ) AS npt";
 $result = mysqli_query($conn, $sql);
 $so_san_pham = mysqli_num_rows($result);
-$conn->close();
 ?>
-
 <div class="category_section layout_padding">
     <div class="container">
         <div class="category_main">
@@ -26,20 +24,10 @@ $conn->close();
                     <li><a href="#" onclick="displayProductsByCate('HP')">HP</a></li>
                 </ul>
             </div>
-            <script>
-                function displayProductsByCate(category) {
-                    // Redirect to product.php and pass the selected category as a parameter
-                    window.location.href = 'sort_by_cate.php?category=' + encodeURIComponent(category);
-                }</script>
-            <script>
-                function productDetails($prd_name,$prd_id) {
-                    window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id);
-                }
-            </script>
-
         </div>
     </div>
 </div>
+
 
 <div class="computers_section_2">
     <div class="container-fluid">
@@ -60,6 +48,17 @@ $conn->close();
         </div>
     </div>
 </div>
-<?php include_once('master/footer.php') ;?>
+<script>
+    function displayProductsByCate(category) {
+        // Redirect to product.php and pass the selected category as a parameter
+        window.location.href = 'sort_by_cate.php?category=' + encodeURIComponent(category);
+    }
+    function productDetails($prd_name,$prd_id) {
+        window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id);
+    }
+</script>
+<?php
+$conn->close();
+include_once('master/footer.php') ;?>
 
 

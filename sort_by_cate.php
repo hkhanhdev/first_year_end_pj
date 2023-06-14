@@ -12,7 +12,7 @@ if (isset($_GET['category'])) {
 ) AS npt
 WHERE npt.cate_name = '$category';";
     $result = mysqli_query($conn, $sql);
-    $conn->close();
+
 }
 ?>
 <div class="category_section layout_padding">
@@ -28,16 +28,7 @@ WHERE npt.cate_name = '$category';";
                     <li><a href="#" onclick="displayProductsByCate('HP')">HP</a></li>
                 </ul>
             </div>
-            <script>
-                function displayProductsByCate($category) {
-                    // Redirect to product.php and pass the selected category as a parameter
-                    window.location.href = 'sort_by_cate.php?category=' + encodeURIComponent($category);
-                }</script>
-            <script>
-                function productDetails($prd_name,$prd_id) {
-                    window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id);
-                }
-            </script>
+
         </div>
     </div>
 </div>
@@ -65,6 +56,18 @@ WHERE npt.cate_name = '$category';";
 </body>
 
 
+<script>
+    function displayProductsByCate($category) {
+        // Redirect to product.php and pass the selected category as a parameter
+        window.location.href = 'sort_by_cate.php?category=' + encodeURIComponent($category);
+    }
+    function productDetails($prd_name,$prd_id) {
+        window.location.href = 'product.php?prd_name=' + encodeURIComponent($prd_name)+"&prd_id="+encodeURIComponent($prd_id);
+    }
+</script>
 
+<?php
+$conn->close();
+include_once ('master/footer.php')
+?>
 
-<?php include_once ('master/footer.php')?>
