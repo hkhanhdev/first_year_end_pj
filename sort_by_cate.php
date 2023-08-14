@@ -12,7 +12,8 @@ if (isset($_GET['category'])) {
 ) AS npt
 WHERE npt.cate_name = '$category';";
     $result = mysqli_query($conn, $sql);
-
+$retrieve_cate = "select c.cate_name from tbl_category c";
+$ket_qua = mysqli_query($conn,$retrieve_cate);
 }
 ?>
 <div class="category_section layout_padding">
@@ -22,13 +23,14 @@ WHERE npt.cate_name = '$category';";
 
             <div class="category_menu">
                 <ul>
-                    <li><a href="#" onclick="displayProductsByCate('ASUS')">Asus</a></li>
-                    <li><a href="#" onclick="displayProductsByCate('Macbook')">Macbook</a></li>
-                    <li><a href="#" onclick="displayProductsByCate('Dell')">Dell</a></li>
-                    <li><a href="#" onclick="displayProductsByCate('HP')">HP</a></li>
+                    <?php while ($roww = $ket_qua->fetch_assoc()) { ?>
+                        <li><a href="#" onclick="displayProductsByCate('<?php echo $roww["cate_name"];?>')"><?php echo $roww["cate_name"]?></a></li>
+                        <!--                    <li><a href="#" onclick="displayProductsByCate('Macbook')">Macbook</a></li>-->
+                        <!--                    <li><a href="#" onclick="displayProductsByCate('Dell')">Dell</a></li>-->
+                        <!--                    <li><a href="#" onclick="displayProductsByCate('HP')">HP</a></li>-->
+                    <?php } ?>
                 </ul>
             </div>
-
         </div>
     </div>
 </div>
