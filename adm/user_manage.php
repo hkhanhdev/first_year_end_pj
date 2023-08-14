@@ -17,6 +17,7 @@ $result = mysqli_query($conn,$sql);
         </tr>
         </thead>
         <tbody>
+<?php if($result->num_rows > 0) {?>
 <?php while($row = $result->fetch_assoc()) {?>
             <tr>
                 <th scope="row"><?php echo $row['user_id']?></th>
@@ -44,6 +45,9 @@ if (isset($_POST['user_id'])) {
     else {
         echo 'Error executing SQL script: ' . mysqli_error($conn);
     }
+} }
+else {
+    echo "<tr><td colspan='6'>No users found.</td></tr>";
 }
 
 ?>
