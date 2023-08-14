@@ -4,7 +4,7 @@ include_once ('master/database.php'); ?>
 <?php
 $prd_name = $_GET['prd_name'];
 $prd_id = $_GET['prd_id'];
-$sql = "select p.prd_id,p.prd_name,p.prd_price,p.prd_image,c.cate_id,c.cate_name from tbl_product p left join tbl_category c on p.cate_id = c.cate_id where prd_id = $prd_id;";
+$sql = "select p.prd_id,p.prd_name,p.prd_price,p.prd_image,c.cate_id,c.cate_name,p.prd_ram,p.prd_gpu,p.prd_resolution,p.prd_operating_system from tbl_product p left join tbl_category c on p.cate_id = c.cate_id where prd_id = $prd_id;";
 $result = mysqli_query($conn,$sql);
 $row = $result->fetch_assoc();
 
@@ -34,8 +34,15 @@ $row = $result->fetch_assoc();
                     <div class="cart_bt_1"><button type="submit" onclick="addToCart('<?php echo $row['prd_name']; ?>','<?php echo $prd_id; ?>')">Add To Cart</button></div>
                 </div>
 
-                <div class="col-md-6">
-                    <h1>Chi tiet san pham</h1>
+                <div class="col-6 ">
+                    <h1>Product detail</h1>
+
+                    <table class="table table-striped">
+                        <tr> <td>GPU: </td> <td class="table-info"><?php echo $row["prd_gpu"]?></td> </tr>
+                        <tr> <td>RAM: </td> <td class="table-primary"><?php echo $row["prd_ram"]?></td> </tr>
+                        <tr> <td>Resolution: </td> <td class="table-danger"><?php echo $row["prd_resolution"]?></td> </tr>
+                        <tr> <td>Operating system: </td> <td class="table-warning"><?php echo $row["prd_operating_system"]?></td> </tr>
+                    </table>
                 </div>
 
             </div>
@@ -110,4 +117,5 @@ $row = $result->fetch_assoc();
 
 <?php
 $conn->close();
-include_once ('master/footer.php')?>
+include_once ('master/footer.php')
+?>
