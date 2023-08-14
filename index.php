@@ -10,7 +10,11 @@ $sql = "SELECT *FROM (
 ) AS npt";
 $result = mysqli_query($conn, $sql);
 $so_san_pham = mysqli_num_rows($result);
+
+$retrieve_cate = "select c.cate_name from tbl_category c";
+$ket_qua = mysqli_query($conn,$retrieve_cate);
 ?>
+
 <div class="category_section layout_padding">
     <div class="container">
         <div class="category_main">
@@ -18,10 +22,12 @@ $so_san_pham = mysqli_num_rows($result);
 
             <div class="category_menu">
                 <ul>
-                    <li><a href="#" onclick="displayProductsByCate('Asus')">Asus</a></li>
-                    <li><a href="#" onclick="displayProductsByCate('Macbook')">Macbook</a></li>
-                    <li><a href="#" onclick="displayProductsByCate('Dell')">Dell</a></li>
-                    <li><a href="#" onclick="displayProductsByCate('HP')">HP</a></li>
+                    <?php while ($roww = $ket_qua->fetch_assoc()) { ?>
+                    <li><a href="#" onclick="displayProductsByCate('<?php echo $roww["cate_name"];?>')"><?php echo $roww["cate_name"]?></a></li>
+<!--                    <li><a href="#" onclick="displayProductsByCate('Macbook')">Macbook</a></li>-->
+<!--                    <li><a href="#" onclick="displayProductsByCate('Dell')">Dell</a></li>-->
+<!--                    <li><a href="#" onclick="displayProductsByCate('HP')">HP</a></li>-->
+                    <?php } ?>
                 </ul>
             </div>
         </div>
@@ -59,6 +65,7 @@ $so_san_pham = mysqli_num_rows($result);
 </script>
 <?php
 $conn->close();
-include_once('master/footer.php') ;?>
+include_once('master/footer.php') ;
+?>
 
 
