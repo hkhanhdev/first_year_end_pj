@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 }
-$get_order_query = "select ord_id,u.username,p.prd_name,ord_amount,ord_total_price,ord_status from tbl_order o left join tbl_user u on o.customer_id = u.user_id left join tbl_product p on o.prd_id = p.prd_id where u.username = '".$_SESSION['username']."' and ord_status = 'in cart';";
+$get_order_query = "select ord_id,u.username,p.prd_name,ord_amount,ord_total_price,ord_status ,p.prd_image from tbl_order o left join tbl_user u on o.customer_id = u.user_id left join tbl_product p on o.prd_id = p.prd_id where u.username = '".$_SESSION['username']."' and ord_status = 'in cart';";
 $get_order_result = mysqli_query($conn, $get_order_query);
 
 
@@ -49,6 +49,7 @@ $get_order_result = mysqli_query($conn, $get_order_query);
         <tr>
             <th scope="col">Order ID</th>
             <th scope="col">Customer Name</th>
+            <th scope="col">Image</th>
             <th scope="col">Product Name</th>
             <th scope="col">Quantity</th>
             <th scope="col">Total Price</th>
@@ -62,6 +63,7 @@ $get_order_result = mysqli_query($conn, $get_order_query);
         <tr>
             <th scope="row"><?php echo $ord_number?></th>
             <td><?php echo $row['username']?></td>
+            <td><img width="70" height="50"src="./assets/images/<?php echo $row['prd_image']?>"></td>
             <td><?php echo $row['prd_name']?></td>
             <td><?php echo $row['ord_amount']?></td>
             <td>$<?php echo $row['ord_total_price']?></td>
@@ -75,6 +77,9 @@ $get_order_result = mysqli_query($conn, $get_order_query);
 ?>
         </tbody>
     </table>
+<div class="col-2 mx-auto">
+    <button onclick="window.location.href='payment.php';" class="btn btn-success" type="button">Proceed to buy</button>
+</div>
 
 <script>
     function delete_ord(ord_id) {
