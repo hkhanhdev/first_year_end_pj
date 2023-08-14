@@ -1,89 +1,89 @@
+<?php include_once ("master/database.php");
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$username = $_SESSION['username'];
+$get_total_price_sql = "select o.customer_id,u.username,u.email,SUM(o.ord_total_price) as total from tbl_order o left join tbl_user u on o.customer_id = u.user_id where u.username = '$username' and ord_status = 'in cart' group by o.customer_id;";
+$result = mysqli_query($conn,$get_total_price_sql);
+$row = $result->fetch_assoc();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Thanh toán đơn hàng</title>
+    <title>Order payment</title>
     <link rel="stylesheet" href="assets/css/style_payment_page.css">
-
 </head>
 <body>
 
 <div class="container">
-
-    <form action="">
-
+    <form action="payment.php" method="post">
         <div class="row">
-
             <div class="col">
-
-                <h3 class="title">Thông tin thanh toán</h3>
+                <h3 class="title">Payment Information</h3>
 
                 <div class="inputBox">
                     <span>Full name :</span>
-                    <input type="text" placeholder="full name">
+                    <input type="text" placeholder="Enter your full name">
                 </div>
                 <div class="inputBox">
                     <span>E-mail :</span>
-                    <input type="email" placeholder="vidu@gmail.com">
+                    <input type="email" placeholder="example@gmail.com">
                 </div>
                 <div class="inputBox">
-                    <span>Địa chỉ :</span>
-                    <input type="text" placeholder="Tỉnh/Thành phố-Quân/huyện-Phường">
+                    <span>Address :</span>
+                    <input type="text" placeholder="Enter your address">
                 </div>
                 <div class="inputBox">
                     <span>Zip code :</span>
-                    <input type="text" placeholder="000084">
+                    <input type="text" placeholder="Enter your zip code">
                 </div>
                 <div class="inputBox">
-                    <span>Số tiền thanh toán :</span>
-                    $<input type="text" placeholder="500">
+                    <span>Total : $<?php echo $row["total"] ?></span>
                 </div>
-                
-                    
             </div>
 
             <div class="col">
-
-                <h3 class="title">Hình thức thanh toán</h3>
+                <h3 class="title">Payment methods</h3>
 
                 <div class="inputBox">
-                    <span>Các loại thẻ :</span>
+                    <span>Card samples :</span>
                     <img src="assets/images/card_img.png" alt="">
                 </div>
                 <div class="inputBox">
-                    <span>Tên trên thẻ :</span>
-                    <input type="text" placeholder="Tên trên thẻ">
+                    <span>Card Name :</span>
+                    <input type="text" placeholder="Enter your card name">
                 </div>
                 <div class="inputBox">
-                    <span>Số thẻ :</span>
-                    <input type="text" placeholder="1111-2222-3333-4444">
+                    <span>Card Number :</span>
+                    <input type="text" placeholder="Enter your card number">
                 </div>
                 <div class="inputBox">
-                    <span>Ngày hết hạn :</span>
+                    <span>Expired Day :</span>
                     <input type="text" placeholder="D/M/Y">
                 </div>
-
-                <div class="flex">
-                    <div class="inputBox">
-                        <span>CVC :</span>
-                        <input type="text" placeholder="1234">
-                    </div>
+                <div class="inputBox">
+                    <span>CVC :</span>
+                    <input type="text" placeholder="Enter your CVC code">
                 </div>
-
             </div>
-    
         </div>
-
-        <input type="submit" value="Tiến hành thanh toán" class="submit-btn">
-
+        <input type="submit" value="Proceed payment" name="Proceed" class="submit-btn">
     </form>
-
-</div>    
+</div>
     
 </body>
 </html>
-
-<?php include_once ('master/footer.php')?>
+<?php if (isset($_POST['Proceed'])) {
+    $customer_id = $row['customer_id'];
+    $update_status_query = "update tbl_order set ord_status = 'processing' where customer_id = '$customer_id' and ord_status = 'in cart'";
+    $updated_query = mysqli_query($conn,$update_status_query);
+    if ($updated_query) { ?>
+        <script>
+        alert("Your order is being processed!");
+        window.location.href = 'index.php';
+        </script>
+<?php }} ?>
+<?php $conn->close();?>
