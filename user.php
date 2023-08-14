@@ -2,6 +2,8 @@
 <?php
 include_once ('master/database.php');
 if ($_SESSION['username'] == '') {
+    $message = "Please logging in to view your account";
+    echo "<script type='text/javascript'>alert('$message');</script>";
     header('Location:login.php');
 }else { ?>
     <h1>Welcome,<?php echo $_SESSION['username'];?></h1>
@@ -12,7 +14,7 @@ if ($_SESSION['username'] == '') {
     <p><strong>Email:<?php echo $_SESSION['email'];?></strong> </p>
     <p><strong>Products in Cart:<?php echo $_SESSION['so_san_pham']?></strong></p>
     </div>
-    </body>
+
 <?php
 }
 if (isset($_POST['logout'])) {
