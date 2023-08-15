@@ -8,7 +8,8 @@ include_once ('master/database.php'); ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>LaptopShop cua Lâm Khánh</title>
+    <title>LK Store</title>
+    <link rel="icon" href="./assets/images/LamAndKhanh.png" type="image/png"/>
     <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
