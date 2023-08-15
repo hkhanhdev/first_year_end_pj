@@ -18,7 +18,7 @@ $ord_result = mysqli_query($conn,$ord_sql);
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2 style="font-weight: bold">Trang Chủ Quản Trị</h2>
+                        <h2 style="font-weight: bold">Home Page</h2>
                     </div>
                 </div>
             </div>

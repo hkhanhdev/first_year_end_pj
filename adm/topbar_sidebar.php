@@ -34,9 +34,9 @@
                 <h4>L K</h4>
                 <ul class="list-unstyled components">
                     <li><a href="dashboard.php"> <span>Dashboard</span></a></li>
-                    <li><a href="product_manage.php"><span>Quản lí sản phẩm</span></a></li>
-                    <li><a href="user_manage.php"> <span>Quản lí thành viên</span></a></li>
-                    <li><a href="order_manage.php"> <span>Quản lí đơn hàng</span></a></li>
+                    <li><a href="product_manage.php"><span>Products Management</span></a></li>
+                    <li><a href="user_manage.php"> <span>Users Management</span></a></li>
+                    <li><a href="order_manage.php"> <span>Orders Management</span></a></li>
                 </ul>
             </div>
         </nav>
