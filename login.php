@@ -42,7 +42,9 @@ include_once('master/database.php'); ?>
                 }else {
                     echo "<p class=".htmlspecialchars('text-danger').">Your email you typed in is not registered</p> ";
                 }
-            }}}?>
+            }
+        }
+        }?>
             <label for="">Email:</label> <br>
             <input type="text"  name="email"> <br>
             <label for="">Username:</label> <br>
