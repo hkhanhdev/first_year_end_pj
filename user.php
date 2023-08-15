@@ -2,9 +2,12 @@
 <?php
 include_once ('master/database.php');
 if ($_SESSION['username'] == '') {
-    $message = "Please logging in to view your account";
-    echo "<script type='text/javascript'>alert('$message');</script>";
-    header('Location:login.php');
+?>
+    <script>
+        alert("Please log in to view your account");
+        window.location.href = 'login.php';
+    </script>
+<?php
 }else { ?>
     <h1>Welcome,<?php echo $_SESSION['username'];?></h1>
     <div>
