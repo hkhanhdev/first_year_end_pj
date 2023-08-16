@@ -19,7 +19,7 @@ include_once('master/database.php'); ?>
             $email = filter_input(INPUT_POST,'email',FILTER_SANITIZE_EMAIL);
             $username = filter_input(INPUT_POST,'username',FILTER_SANITIZE_SPECIAL_CHARS);
             $password = $_POST['password'];
-            $sql = "select username,user_pass,email from tbl_user where email = '$email'";
+            $sql = "select username,user_pass,email,is_accessible from tbl_user where email = '$email'";
             $result = mysqli_query($conn,$sql);
             if ($email == 'admin@gmail.com' && $username == 'admin' && $password == 'admin') {
                 header('Location:adm/dashboard.php');
@@ -30,6 +30,8 @@ include_once('master/database.php'); ?>
                     echo "<p class=".htmlspecialchars('text-danger').">Wrong username</p> ";
                 }elseif (!password_verify($password,$row['user_pass'])) {
                     echo "<p class=".htmlspecialchars('text-danger').">Wrong password</p> ";
+                }elseif ($row['is_accessible'] == 0) {
+                    echo "<p class=".htmlspecialchars('text-danger').">Your account has been banned @@</p> ";
                 }
                 else {
                     $_SESSION['username'] = $username;

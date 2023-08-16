@@ -13,6 +13,7 @@ $result = mysqli_query($conn,$sql);
             <th scope="col">Username</th>
             <th scope="col">Email</th>
             <th scope="col">Message</th>
+            <th scope="col">Status</th>
 
         </tr>
         </thead>
@@ -24,47 +25,39 @@ $result = mysqli_query($conn,$sql);
                 <td><?php echo $row['username']?></td>
                 <td><?php echo $row['email']?></td>
                 <td><?php echo $row['customer_message']?></td>
-
-                <td><button type="button" class="btn btn-danger" onclick="delete_user(<?php echo $row['user_id']?>)">Delete</button></td>
+<?php if ($row['is_accessible'] == 1) { ?>
+                <td class="table-success">Allowed</td>
+<?php }else{?>
+                <td class="table-danger">Banned</td>
+<?php }?>
+                <td><button type="button" class="btn btn-success" onclick="update_user(<?php echo $row['user_id']?>,1)">Unban</button></td>
+                <td><button type="button" class="btn btn-danger" onclick="update_user(<?php echo $row['user_id']?>,0)">Ban</button></td>
             </tr>
 
 <?php }
-if (isset($_POST['user_id'])) {
+if (isset($_POST['user_id']) && isset($_POST['status'])) {
     $user_id = $_POST['user_id'];
-    $delete_user = "DELETE FROM tbl_user WHERE user_id = ".$user_id;
-    $deleted_user = mysqli_query($conn, $delete_user);
-    if ($deleted_user) {
-        $update_user = "UPDATE tbl_user SET user_id = user_id - 1 where user_id > ".$user_id;
-        $reorder_user = mysqli_multi_query($conn, $update_user);
-        if ($reorder_user) {
-            echo 'Order of user_id updated successfully.';
-        } else {
-            echo 'Error updating order of user_id: ' . mysqli_error($conn);
-        }
-    }
-    else {
-        echo 'Error executing SQL script: ' . mysqli_error($conn);
-    }
-} }
-else {
+    $update_user = "UPDATE tbl_user SET is_accessible = ".$_POST['status']." where user_id = ".$user_id;
+    $updated_user = mysqli_multi_query($conn, $update_user);
+}
+}else {
     echo "<tr><td colspan='6'>No users found.</td></tr>";
 }
-
 ?>
         </tbody>
     </table>
 </div>
 
 <script>
-    function delete_user(user_id) {
-        // Make AJAX request to the PHP file
+    function update_user(user_id,status) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', window.location.href, true);
-        // Create a new FormData object and append the value to it
         var formData = new FormData();
         formData.append('user_id', user_id);
+        formData.append('status', status);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                alert("Updating ...")
                 window.location.href = "user_manage.php";
             }
         };
