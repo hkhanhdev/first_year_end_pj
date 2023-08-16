@@ -54,6 +54,9 @@ include_once('master/database.php'); ?>
             <label for="">Password:</label> <br>
             <input type="password"  name="password"> <br> <br>
             <button type="submit" class="btn btn-primary">Login</button>
+            <br>
+            <br>
+            <a href="change_password.php" class="text-danger">Forgot password?</a>
         </form>
     </div>
 </div>
