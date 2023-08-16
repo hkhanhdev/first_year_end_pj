@@ -9,7 +9,8 @@ create table tbl_user (
     customer_address varchar(255),
     customer_phone int(10) unique key,
     customer_email varchar(50) unique key,
-    customer_message text
+    customer_message text,
+    is_accessible int default 1
 );
 create table tbl_category (
 	cate_id int(11) primary key auto_increment,
@@ -27,6 +28,7 @@ create table tbl_product(
     prd_gpu varchar(255) not null,
     prd_resolution varchar(255) not null,
     prd_operating_system varchar(255) not null,
+    is_displayed int default 1,
     foreign key(cate_id) references tbl_category(cate_id)
 );
     
@@ -51,11 +53,11 @@ values
 
 insert into tbl_product(prd_name,prd_price,prd_image,cate_id,prd_ram,prd_gpu ,prd_resolution,prd_operating_system )
 values
-('Macbook Air 2022 13.6 inch Apple M2 – 16GB RAM 512GB SSD',700,'macbook.jpg',2,"16GB","GPU 7 nhân, 16 nhân Neural Engine","2560 x 1600 pixels (2K)","MacOS"),
-('Laptop Asus Vivobook M1403QA-LY022W R5 5600H/8GB/512GB',500,'img1.jpg',1,"8GB","NVIDIA GeForce RTX 3050 4GB GDDR6, Boost Clock 1500MHz, TGP 85W","1920 x 1080 pixels (FullHD)","Windowns"),
-('Dell XPS 13 Plus 9320 (2022) - I7/32GB/1TB/UHD 4K Touch',550,'laptop-dell.jpg',3,"32GB","NVIDIA GeForce GTX 1650 4 GB GDDR6","1920 x 1080 pixels (FullHD)","Windowns"),
-('Laptop HP Pavilion 15 eg2062TU i3 1215U/8GB/256GB',600,'laptop-hp.jpg',4,"8GB","NVIDIA GeForce RTX 2050 4GB","1920 x 1080 pixels (FullHD)","Windowns"),
-('Macbook Air 2020 i3 8GB 256GB | MWTJ2/ MWTL2/ MWTK2',1900,'img2.jpg',2,"8GB","GPU 16 nhân, 16 nhân Neural Engine","2560 x 1600 pixels (2K)","MacOS"),
-('Laptop Dell Latitude 7390 2in1',450,'laptop-dell2.jpeg',3,"32GB","AMD Radeon Graphics","1920 x 1080 pixels (FullHD)","Windowns");
+('Macbook Air Apple M2',700,'macbook.jpg',2,"64GB","M1 Pro Max","2560 x 1600 pixels (2K)","MacOS"),
+('Asus Vivobook R5 ',500,'img1.jpg',1,"64GB","NVIDIA GeForce RTX 4090 Ti","1920 x 1080 pixels (FullHD)","Windowns"),
+('Dell XPS 13 Plus 9320',550,'laptop-dell.jpg',3,"64GB","NVIDIA GeForce RTX 4090 Ti","1920 x 1080 pixels (FullHD)","Windowns"),
+('HP Pavilion 15',600,'laptop-hp.jpg',4,"64GB","NVIDIA GeForce RTX 4090 Ti","1920 x 1080 pixels (FullHD)","Windowns"),
+('Macbook Air 2020 i3',1900,'img2.jpg',2,"64GB","M1 Pro Max","2560 x 1600 pixels (2K)","MacOS"),
+('Dell Latitude 7390',450,'laptop-dell2.jpeg',3,"64GB","NVIDIA GeForce RTX 4090 Ti","1920 x 1080 pixels (FullHD)","Windowns");
 
 

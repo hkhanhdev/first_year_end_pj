@@ -10,6 +10,7 @@ include_once ('database.php'); ?>
             <th scope="col">Price</th>
             <th scope="col">Category</th>
             <th scope="col">Image</th>
+
         </tr>
         </thead>
         <tbody>
@@ -25,24 +26,41 @@ if (isset($_POST['prd_name']) && isset($_POST['prd_price']) && isset($_POST['prd
     $prd_name = $_POST['prd_name'];
     $prd_price = $_POST['prd_price'];
     $prd_cate = $_POST['prd_cate'];
+    // Check if cate = macbook
+    if ($prd_cate == "Macbook") {
+        $is_macbook = true;
+    }else {
+        $is_macbook = false;
+    }
+
     $img_file = $_POST['image'];
     $check_if_cate_exist = "SELECT * FROM tbl_category WHERE cate_name = '$prd_cate'";
     $if_cate_exist = mysqli_query($conn, $check_if_cate_exist);
-    if ($if_cate_exist->num_rows > 0) {
-        $cate_row = $if_cate_exist->fetch_assoc();
-        $insert_prd = "INSERT INTO tbl_product(prd_name, prd_price, prd_image, cate_id) 
-               VALUES ('$prd_name', '$prd_price','$img_file',{$cate_row['cate_id']})";
-        $inserted_prd = mysqli_query($conn, $insert_prd);
-    } else {
+    // Check if cate already existed then just add new product, if not add new cate then add new product
+    if ($if_cate_exist->num_rows == 0) {
         $insert_new_cate = "INSERT INTO tbl_category(cate_name) VALUES ('$prd_cate')";
         $inserted_new_cate = mysqli_query($conn, $insert_new_cate);
-        $if_cate_exist = mysqli_query($conn, $check_if_cate_exist);
+        $cate_now_exist = mysqli_query($conn, $check_if_cate_exist);
+        $cate_row = $cate_now_exist ->fetch_assoc();
+        if($is_macbook) {
+            $insert_prd = "INSERT INTO tbl_product(prd_name, prd_price, prd_image, cate_id,prd_ram,prd_gpu,prd_resolution,prd_operating_system) 
+               VALUES ('$prd_name', '$prd_price','$img_file',{$cate_row['cate_id']},'64GB','M1 Pro Max','2560 x 1600 pixels (2K)','MacOS')";
+        }else {
+            $insert_prd = "INSERT INTO tbl_product(prd_name, prd_price, prd_image, cate_id,prd_ram,prd_gpu,prd_resolution,prd_operating_system) 
+               VALUES ('$prd_name', '$prd_price','$img_file',{$cate_row['cate_id']},'64GB','NVIDIA GeForce RTX 4090 Ti','1920 x 1080 pixels (FullHD)','Windows')";
+        }
+        $inserted_prd = mysqli_query($conn, $insert_prd);
+    }else {
         $cate_row = $if_cate_exist->fetch_assoc();
-        $insert_prd = "INSERT INTO tbl_product(prd_name, prd_price, prd_image, cate_id) 
-               VALUES ('$prd_name', '$prd_price', '$img_file', {$cate_row['cate_id']})";
+        if($is_macbook) {
+            $insert_prd = "INSERT INTO tbl_product(prd_name, prd_price, prd_image, cate_id,prd_ram,prd_gpu,prd_resolution,prd_operating_system) 
+               VALUES ('$prd_name', '$prd_price','$img_file',{$cate_row['cate_id']},'64GB','M1 Pro Max','2560 x 1600 pixels (2K)','MacOS')";
+        }else {
+            $insert_prd = "INSERT INTO tbl_product(prd_name, prd_price, prd_image, cate_id,prd_ram,prd_gpu,prd_resolution,prd_operating_system) 
+               VALUES ('$prd_name', '$prd_price','$img_file',{$cate_row['cate_id']},'64GB','NVIDIA GeForce RTX 4090 Ti','1920 x 1080 pixels (FullHD)','Windows')";
+        }
         $inserted_prd = mysqli_query($conn, $insert_prd);
     }
-
 }
 ?>
         </tbody>
@@ -57,11 +75,12 @@ if (isset($_POST['prd_name']) && isset($_POST['prd_price']) && isset($_POST['prd
             <th scope="col">Price</th>
             <th scope="col">Category</th>
             <th scope="col">Image</th>
+            <th scope="col">Status</th>
         </tr>
         </thead>
         <tbody>
 <?php
-$sql = "select p.prd_id,p.prd_name,p.prd_price,p.prd_image,c.cate_id,c.cate_name from tbl_product p left join tbl_category c on p.cate_id = c.cate_id;" ;
+$sql = "select p.prd_id,p.prd_name,p.prd_price,p.prd_image,c.cate_id,c.cate_name,p.is_displayed from tbl_product p left join tbl_category c on p.cate_id = c.cate_id;" ;
 $result = mysqli_query($conn,$sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -72,26 +91,15 @@ if ($result->num_rows > 0) {
             <td>$<?php echo $row['prd_price']?></td>
             <td><?php echo $row['cate_name']?></td>
             <td><?php echo $row['prd_image']?></td>
-            <td><button type="button" class="btn btn-danger" onclick="delete_prd('<?php echo $row['prd_id']?>')">Delete</button></td>
+<?php if ($row['is_displayed'] == 1) {?>
+            <td class="table-success">Displayed</td>
+<?php }else{?>
+            <td class="table-danger">Hidden</td>
+<?php }?>
+            <td><button type="button" class="btn btn-success" onclick="update_prd()(<?php echo $row['prd_id']?>,1)">Display</button></td>
+            <td><button type="button" class="btn btn-danger" onclick="update_prd(<?php echo $row['prd_id']?>,0)">Hide</button></td>
         </tr>
 <?php
-    }
-    if (isset($_POST['prd_id'])) {
-        $prd_id = $_POST['prd_id'];
-        $delete_prd = "DELETE FROM tbl_product WHERE prd_id = $prd_id";
-        $deleted_prd = mysqli_query($conn, $delete_prd);
-        if ($deleted_prd) {
-            $update_prd = "UPDATE tbl_product SET prd_id = prd_id - 1 where prd_id > ".$prd_id;
-            $reorder_prd = mysqli_multi_query($conn, $update_prd);
-            if ($reorder_prd) {
-                echo 'Order of prd_id updated successfully.';
-            } else {
-                echo 'Error updating order of prd_id: ' . mysqli_error($conn);
-            }
-        }
-        else {
-            echo 'Error executing SQL script: ' . mysqli_error($conn);
-        }
     }
 } else {
     // Handle case when no rows are retrieved
@@ -120,29 +128,37 @@ if ($result->num_rows > 0) {
         formData.append('image',image_file_name);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                alert("Adding product to database ...")
                 window.location.href = "product_manage.php";
             }
         };
         xhr.send(formData);
     }
 
-    function delete_prd(prd_id) {
+    function update_prd(prd_id,status) {
         // Make AJAX request to the PHP file
         var xhr = new XMLHttpRequest();
         xhr.open('POST', window.location.href, true);
         // Create a new FormData object and append the value to it
         var formData = new FormData();
         formData.append('prd_id', prd_id);
+        formData.append('status', status);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                alert("Updating ...")
                 window.location.href = "product_manage.php";
             }
         };
         xhr.send(formData);
     }
 </script>
-
-
+<?php
+if (isset($_POST['prd_id']) && isset($_POST["status"])) {
+$prd_id = $_POST['prd_id'];
+$update_prd = "update tbl_product set is_displayed = ".$_POST['status']." WHERE prd_id = ".$prd_id;
+$updated_prd = mysqli_query($conn, $update_prd);
+}
+?>
 
 <?php
 $conn->close();
