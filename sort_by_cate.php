@@ -6,11 +6,11 @@ include_once ('master/database.php');
 if (isset($_GET['category'])) {
     $category = $_GET['category'];
     $sql = "SELECT *FROM (
-  SELECT p.prd_id, p.prd_name, c.cate_id, c.cate_name, p.prd_price,p.prd_image
+  SELECT p.prd_id, p.prd_name, c.cate_id, c.cate_name, p.prd_price,p.prd_image,p.is_displayed
   FROM tbl_product p 
   LEFT JOIN tbl_category c ON p.cate_id = c.cate_id
 ) AS npt
-WHERE npt.cate_name = '$category';";
+WHERE npt.cate_name = '$category' and npt.is_displayed = 1;";
     $result = mysqli_query($conn, $sql);
 $retrieve_cate = "select c.cate_name from tbl_category c";
 $ket_qua = mysqli_query($conn,$retrieve_cate);

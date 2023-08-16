@@ -4,10 +4,10 @@ include_once ('master/database.php');
 
 <?php
 $sql = "SELECT *FROM (
-  SELECT p.prd_id, p.prd_name, c.cate_id, c.cate_name, p.prd_price,p.prd_image
+  SELECT p.prd_id, p.prd_name, c.cate_id, c.cate_name, p.prd_price,p.prd_image,p.is_displayed
   FROM tbl_product p 
   LEFT JOIN tbl_category c ON p.cate_id = c.cate_id
-) AS npt";
+) AS npt where npt.is_displayed = 1";
 $result = mysqli_query($conn, $sql);
 $so_san_pham = mysqli_num_rows($result);
 
@@ -24,17 +24,12 @@ $ket_qua = mysqli_query($conn,$retrieve_cate);
                 <ul>
                     <?php while ($roww = $ket_qua->fetch_assoc()) { ?>
                     <li><a href="#" onclick="displayProductsByCate('<?php echo $roww["cate_name"];?>')"><?php echo $roww["cate_name"]?></a></li>
-<!--                    <li><a href="#" onclick="displayProductsByCate('Macbook')">Macbook</a></li>-->
-<!--                    <li><a href="#" onclick="displayProductsByCate('Dell')">Dell</a></li>-->
-<!--                    <li><a href="#" onclick="displayProductsByCate('HP')">HP</a></li>-->
                     <?php } ?>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
-
 <div class="computers_section_2">
     <div class="container-fluid">
         <div class="computer_main">
