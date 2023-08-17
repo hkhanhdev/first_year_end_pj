@@ -96,7 +96,7 @@ if ($result->num_rows > 0) {
 <?php }else{?>
             <td class="table-danger">Hidden</td>
 <?php }?>
-            <td><button type="button" class="btn btn-success" onclick="update_prd()(<?php echo $row['prd_id']?>,1)">Display</button></td>
+            <td><button type="button" class="btn btn-success" onclick="update_prd(<?php echo $row['prd_id']?>,1)">Display</button></td>
             <td><button type="button" class="btn btn-danger" onclick="update_prd(<?php echo $row['prd_id']?>,0)">Hide</button></td>
         </tr>
 <?php
